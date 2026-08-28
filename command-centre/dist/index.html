@@ -1,0 +1,516 @@
+<title>Jad Command Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#F7F5F9; --surface:#FFFFFF; --surface-2:#F1EDF6; --surface-3:#FBFAFC;
+  --ink:#191322; --ink-2:#584F64; --ink-3:#8B8296;
+  --rule:#E4DEEA; --rule-strong:#CFC6D8;
+  --violet:#A434FF; --violet-ink:#7A1FCC; --violet-wash:#F4E9FF;
+  --stone:#CCC9C3; --pri-med:#CCC9C3;
+  --critical:#C51E45; --critical-wash:#FCE8EC;
+  --warn:#A9660B; --warn-wash:#FBF0DE;
+  --good:#137A5B; --good-wash:#E3F4EE;
+  --shadow:0 1px 2px rgba(25,19,34,.05), 0 8px 24px -16px rgba(25,19,34,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#110D17; --surface:#1A1523; --surface-2:#231C2E; --surface-3:#151020;
+    --ink:#F3EFF7; --ink-2:#A99FB6; --ink-3:#7B7189;
+    --rule:#2F2739; --rule-strong:#453A52;
+    --violet:#A434FF; --violet-ink:#CB93FF; --violet-wash:#2B1442; --pri-med:#6B5C7D;
+    --critical:#FF7D98; --critical-wash:#3B1320;
+    --warn:#EAAC43; --warn-wash:#33250E;
+    --good:#4FD5A7; --good-wash:#0D2E24;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#110D17; --surface:#1A1523; --surface-2:#231C2E; --surface-3:#151020;
+  --ink:#F3EFF7; --ink-2:#A99FB6; --ink-3:#7B7189;
+  --rule:#2F2739; --rule-strong:#453A52;
+  --violet:#A434FF; --violet-ink:#CB93FF; --violet-wash:#2B1442; --pri-med:#6B5C7D;
+  --critical:#FF7D98; --critical-wash:#3B1320;
+  --warn:#EAAC43; --warn-wash:#33250E;
+  --good:#4FD5A7; --good-wash:#0D2E24;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:32px 24px 72px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--violet); outline-offset:2px; border-radius:3px}
+
+/* ---------- masthead ---------- */
+.mast{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:20px; padding-bottom:20px; border-bottom:2px solid var(--ink)}
+.mast h1{margin:0; font-size:38px; font-weight:700; letter-spacing:-.022em; line-height:1.05; text-wrap:balance}
+.mast .rule-dot{color:var(--violet)}
+.mast .date{margin:6px 0 0; color:var(--ink-2); font-size:15px; font-weight:500}
+.stamp{display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+.freshness{display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; background:var(--violet-wash); color:var(--violet-ink); font-size:12.5px; font-weight:600; letter-spacing:.01em}
+.freshness .pulse{width:7px; height:7px; border-radius:50%; background:var(--violet)}
+.freshness.stale{background:var(--warn-wash); color:var(--warn)}
+.freshness.stale .pulse{background:var(--warn)}
+.sources{display:flex; flex-wrap:wrap; gap:4px 12px; justify-content:flex-end; font-size:11.5px; color:var(--ink-3); letter-spacing:.03em}
+.sources span::before{content:"● "; color:var(--good); font-size:9px; vertical-align:1px}
+.sources span.down::before{color:var(--critical)}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0 30px}
+.tile{background:var(--surface); border:1px solid var(--rule); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.tile::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--rule-strong)}
+.tile.accent::before{background:var(--violet)}
+.tile.critical::before{background:var(--critical)}
+.tile.warn::before{background:var(--warn)}
+.tile .label{font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.tile .value{font-size:34px; font-weight:700; line-height:1.1; margin-top:4px; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.tile .note{font-size:12.5px; color:var(--ink-2); margin-top:2px}
+.tile.critical .note{color:var(--critical); font-weight:500}
+
+/* ---------- section furniture ---------- */
+h2{margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-2); display:flex; align-items:baseline; gap:10px}
+h2 .count{color:var(--ink-3); font-weight:600; letter-spacing:.04em}
+h2::after{content:""; flex:1; height:1px; background:var(--rule)}
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:12px; box-shadow:var(--shadow)}
+
+/* ---------- main split ---------- */
+.split{display:grid; grid-template-columns:1.5fr 1fr; gap:30px; align-items:start}
+.stack{display:flex; flex-direction:column; gap:30px}
+
+/* ---------- focus queue ---------- */
+.focus{display:flex; flex-direction:column; gap:12px}
+.item{display:grid; grid-template-columns:auto 1fr; gap:16px; padding:18px 20px; background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--violet); border-radius:10px; box-shadow:var(--shadow)}
+.item .rank{font-size:13px; font-weight:700; color:var(--violet-ink); font-variant-numeric:tabular-nums; padding-top:2px}
+.item h3{margin:0; font-size:16.5px; font-weight:600; line-height:1.35; letter-spacing:-.008em; text-wrap:balance}
+.item h3 a{text-decoration:none; border-bottom:1px solid transparent}
+.item h3 a:hover{border-bottom-color:var(--violet)}
+.item .why{margin:8px 0 0; font-size:13.5px; color:var(--ink-2); line-height:1.6; max-width:62ch}
+.metarow{display:flex; flex-wrap:wrap; gap:7px; margin-top:11px}
+.chip{display:inline-block; padding:3px 9px; border-radius:5px; font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; background:var(--surface-2); color:var(--ink-2)}
+.chip.high{background:var(--violet-wash); color:var(--violet-ink)}
+.chip.due{background:var(--critical-wash); color:var(--critical)}
+.chip.overdue{background:var(--critical-wash); color:var(--critical)}
+
+/* ---------- day rail ---------- */
+.rail{padding:6px 0 6px 0}
+.allday{display:flex; gap:8px; align-items:center; padding:8px 14px; margin-bottom:12px; background:var(--surface-2); border-radius:8px; font-size:13px; color:var(--ink-2)}
+.allday b{color:var(--ink); font-weight:600}
+.slot{display:grid; grid-template-columns:58px 1fr; gap:14px; position:relative; padding-bottom:14px}
+.slot::before{content:""; position:absolute; left:71.5px; top:16px; bottom:-2px; width:1px; background:var(--rule)}
+.slot:last-child::before{display:none}
+.time{font-size:12px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; text-align:right; padding-top:1px; letter-spacing:.01em}
+.slot .body{position:relative; padding-left:18px}
+.slot .body::before{content:""; position:absolute; left:-4.5px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--surface); border:2px solid var(--rule-strong)}
+.slot.event .body::before{background:var(--violet); border-color:var(--violet)}
+.slot.meeting .body::before{background:var(--ink-2); border-color:var(--ink-2)}
+.slot .title{font-size:13.5px; font-weight:500; line-height:1.4}
+.slot.focus .title,.slot.break .title,.slot.admin .title{color:var(--ink-2); font-weight:400}
+.slot.declined .title{color:var(--ink-3); text-decoration:line-through}
+.slot .where{font-size:11.5px; color:var(--ink-3); margin-top:1px}
+.slot .flag{display:inline-block; margin-top:5px; padding:3px 8px; border-radius:5px; background:var(--warn-wash); color:var(--warn); font-size:11px; font-weight:600}
+
+/* ---------- venue table ---------- */
+.scroll{overflow-x:auto; border:1px solid var(--rule); border-radius:12px; background:var(--surface); box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; min-width:760px; font-size:13.5px}
+th{text-align:left; font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2); padding:12px 16px; background:var(--surface-2); border-bottom:1px solid var(--rule); white-space:nowrap}
+td{padding:13px 16px; border-bottom:1px solid var(--rule); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.when{font-weight:600; white-space:nowrap; color:var(--ink-2); font-size:12.5px}
+td.ev{font-weight:500; min-width:230px}
+td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+.staff{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; white-space:nowrap}
+.staff::before{content:""; width:7px; height:7px; border-radius:50%; flex:none}
+.staff.ok{color:var(--good)} .staff.ok::before{background:var(--good)}
+.staff.self{color:var(--violet-ink)} .staff.self::before{background:var(--violet)}
+.staff.none{color:var(--ink-3)} .staff.none::before{background:var(--rule-strong)}
+.staff.gap{color:var(--critical)} .staff.gap::before{background:var(--critical)}
+
+/* ---------- asks ---------- */
+.asks{display:flex; flex-direction:column; gap:10px}
+.ask{padding:14px 16px; background:var(--surface); border:1px solid var(--rule); border-radius:10px; border-left:3px solid var(--rule-strong); box-shadow:var(--shadow)}
+.ask.critical{border-left-color:var(--critical)}
+.ask.stalled{border-left-color:var(--warn)}
+.ask.open{border-left-color:var(--violet)}
+.ask.moving{border-left-color:var(--good)}
+.ask .head{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; justify-content:space-between}
+.ask .who{font-size:14px; font-weight:600}
+.ask .state{padding:2px 8px; border-radius:5px; font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap}
+.ask.critical .state{background:var(--critical-wash); color:var(--critical)}
+.ask.stalled .state{background:var(--warn-wash); color:var(--warn)}
+.ask.open .state{background:var(--violet-wash); color:var(--violet-ink)}
+.ask.moving .state{background:var(--good-wash); color:var(--good)}
+.ask .text{margin:5px 0 0; font-size:13px; color:var(--ink-2); line-height:1.55}
+.ask .foot{margin-top:8px; font-size:11px; color:var(--ink-3); letter-spacing:.02em}
+
+/* ---------- week list ---------- */
+.week{display:flex; flex-direction:column}
+.wk{display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:baseline; padding:10px 2px; border-bottom:1px solid var(--rule); font-size:13.5px}
+.week .wk:last-child{border-bottom:none}
+.pri{width:6px; height:6px; border-radius:50%; background:var(--rule-strong); transform:translateY(-1px)}
+.pri.High{background:var(--violet)} .pri.Medium{background:var(--pri-med)} .pri.Low{background:var(--rule-strong)}
+.wk a{text-decoration:none; border-bottom:1px solid transparent; line-height:1.45}
+.wk a:hover{border-bottom-color:var(--violet)}
+.wk .due{font-size:11px; font-weight:600; color:var(--critical); white-space:nowrap}
+
+/* ---------- flagged ---------- */
+.flagged{display:flex; flex-wrap:wrap; gap:8px}
+.fl{display:inline-flex; align-items:baseline; gap:8px; padding:7px 12px; background:var(--surface-2); border-radius:8px; font-size:12.5px; color:var(--ink-2)}
+.fl .d{font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--rule); font-size:11.5px; color:var(--ink-3); display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between}
+
+@media (max-width:900px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1fr}
+  .mast h1{font-size:30px}
+  .stamp{align-items:flex-start}
+  .sources{justify-content:flex-start}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="wrap">
+
+
+<header class="mast">
+  <div>
+    <h1>Jad Command Centre<span class="rule-dot">.</span></h1>
+    <p class="date">Friday 28 August 2026 · Stone &amp; Chalk Adelaide</p>
+  </div>
+  <div class="stamp">
+    <span class="freshness" id="freshness" data-at="2026-08-28T10:42:00+09:30">
+      <span class="pulse"></span><span class="txt">Fri 28 Aug, 10:42 am ACST</span>
+    </span>
+    <div class="sources"><span class="">Asana · Jad's Weekly Sprint</span><span class="">Calendars · Primary · Launch Pad · Casual Staff</span><span class="">Gmail · last 3 days</span><span class="">Slack · via TODAY board</span></div>
+  </div>
+</header>
+<div class="tiles"><div class="tile accent">
+    <div class="label">Focus items</div>
+    <div class="value">3</div>
+    <div class="note">all High priority</div>
+  </div><div class="tile critical">
+    <div class="label">Open asks</div>
+    <div class="value">5</div>
+    <div class="note">1 expires tomorrow</div>
+  </div><div class="tile neutral">
+    <div class="label">Launch Pad today</div>
+    <div class="value">3</div>
+    <div class="note">60 expected in the room</div>
+  </div><div class="tile warn">
+    <div class="label">Flagged for EOD</div>
+    <div class="value">6</div>
+    <div class="note">low-stakes overdue admin</div>
+  </div></div>
+<div class="split">
+  <div class="stack">
+    <section><h2>Today's focus<span class="count">3 items, in priority order</span></h2><div class="focus"><article class="item">
+      <div class="rank">01</div>
+      <div>
+        <h3><a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506960247198" target="_blank" rel="noopener">Triage HubSpot deal — MLAI: Cursor Community | Adelaide</a></h3>
+        <p class="why">Event ran last night at Launch Pad. A staffing discrepancy was flagged pre-event (Launch Pad showed 120 pax / 3 supervisors, Casual Staff showed 60 / 1) and Sam never responded. Confirm with Ben and Caitlin that the night ran clean, then get Sam's update — combine with the overdue MLAI invoice chase.</p>
+        <div class="metarow"><span class="chip high">High</span><span class="chip due">Due today</span><span class="chip">Asana</span></div>
+      </div>
+    </article><article class="item">
+      <div class="rank">02</div>
+      <div>
+        <h3><a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925365113097" target="_blank" rel="noopener">Reply to Dan Rosen (senderz.ai) — OpenAI credit redemption blocked</a></h3>
+        <p class="why">AI Solopreneur, Sydney cohort. Dan got into Connect after the resent signup link on 24 Aug, then hit an error redeeming the OpenAI credits. He followed up again on 27 Aug asking for an updated URL and is still waiting.</p>
+        <div class="metarow"><span class="chip high">High</span><span class="chip due">Due today</span><span class="chip">Asana</span></div>
+      </div>
+    </article><article class="item">
+      <div class="rank">03</div>
+      <div>
+        <h3><a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925262828247" target="_blank" rel="noopener">Follow up with Caitlin and Roshae on the Josh community incident</a></h3>
+        <p class="why">Racist comment to residents plus a separate threat. Ban decision was clear; Caitlin is gathering evidence to make it black-and-white first and notes he has been avoiding the space. Community safety — check where the evidence and the decision have landed.</p>
+        <div class="metarow"><span class="chip high">High</span><span class="chip due">Due today</span><span class="chip">Asana</span></div>
+      </div>
+    </article></div></section>
+    <section><h2>Open asks<span class="count">5 awaiting Jad</span></h2><div class="asks"><article class="ask critical">
+    <div class="head">
+      <span class="who">Anthropic</span>
+      <span class="state">Expires tomorrow</span>
+    </div>
+    <p class="text">API key “sc-key” for the Stone &amp; Chalk org expires tomorrow, 29 Aug. Every request using it stops working after that.</p>
+    <div class="foot">Gmail · 27 Aug · Not tracked in Asana</div>
+  </article><article class="ask open">
+    <div class="head">
+      <span class="who">Dan Rosen — senderz.ai</span>
+      <span class="state">Awaiting reply</span>
+    </div>
+    <p class="text">Asked for the updated URL to redeem OpenAI credits after hitting an error. Second follow-up, still unanswered.</p>
+    <div class="foot">Gmail · 27 Aug · On today's board</div>
+  </article><article class="ask open">
+    <div class="head">
+      <span class="who">Roshae and Caitlin</span>
+      <span class="state">Awaiting reply</span>
+    </div>
+    <p class="text">Evidence gathering on the Josh incident before acting on the ban. Needs a decision checkpoint.</p>
+    <div class="foot">Slack · 27 Aug · On today's board</div>
+  </article><article class="ask stalled">
+    <div class="head">
+      <span class="who">Sam — MLAI</span>
+      <span class="state">No response</span>
+    </div>
+    <p class="text">No response on the pre-event staffing discrepancy, and INV MLA-250626 ($412.50) has been overdue since 15 July.</p>
+    <div class="foot">Gmail · Since 15 Jul · On today's board</div>
+  </article><article class="ask moving">
+    <div class="head">
+      <span class="who">Amy Schapel — SAFA</span>
+      <span class="state">Moving</span>
+    </div>
+    <p class="text">Quote approved for the CBA/SAFA Global Markets Conference and a time booked. Will review the event pack beforehand.</p>
+    <div class="foot">Gmail · 26 Aug · On this week's board</div>
+  </article></div></section>
+  </div>
+  <div class="stack">
+    <section><h2>The day<span class="count">Friday 28 August 2026</span></h2><div class="rail"><div class="allday">All day · <b>Casual Time Sheet Approval</b></div><div class="slot team">
+      <div class="time">9:00</div>
+      <div class="body">
+        <div class="title">CHALKBOARD — Newsletter Sent</div>
+        
+        
+      </div>
+    </div><div class="slot focus">
+      <div class="time">9:00</div>
+      <div class="body">
+        <div class="title">Planning out the day</div>
+        
+        
+      </div>
+    </div><div class="slot task">
+      <div class="time">9:15</div>
+      <div class="body">
+        <div class="title">Ask Chrissy about Nimble vs Lane</div>
+        
+        
+      </div>
+    </div><div class="slot focus">
+      <div class="time">9:30</div>
+      <div class="body">
+        <div class="title">Event Enquiries</div>
+        
+        
+      </div>
+    </div><div class="slot focus">
+      <div class="time">10:00</div>
+      <div class="body">
+        <div class="title">Update Asana Board</div>
+        
+        
+      </div>
+    </div><div class="slot event">
+      <div class="time">11:00</div>
+      <div class="body">
+        <div class="title">SuperIT: Claude Workshop — bump-in to bump-out</div>
+        <div class="where">The Launch Pad</div>
+        
+      </div>
+    </div><div class="slot meeting">
+      <div class="time">11:15</div>
+      <div class="body">
+        <div class="title">Bec &amp; Jad catch up</div>
+        <div class="where">Google Meet</div>
+        <span class="flag">Sits inside the SuperIT bump-in window</span>
+      </div>
+    </div><div class="slot meeting declined">
+      <div class="time">11:30</div>
+      <div class="body">
+        <div class="title">Event Check-up — Event Gurlies</div>
+        
+        
+      </div>
+    </div><div class="slot break">
+      <div class="time">12:30</div>
+      <div class="body">
+        <div class="title">Lunch</div>
+        
+        
+      </div>
+    </div><div class="slot focus">
+      <div class="time">1:00</div>
+      <div class="body">
+        <div class="title">Invoicing and Feedback</div>
+        
+        
+      </div>
+    </div><div class="slot meeting">
+      <div class="time">3:00</div>
+      <div class="body">
+        <div class="title">Weekly sync and prep for program week ahead</div>
+        <div class="where">Google Meet</div>
+        
+      </div>
+    </div><div class="slot event">
+      <div class="time">3:30</div>
+      <div class="body">
+        <div class="title">Chalk Chills</div>
+        <div class="where">The Launch Pad</div>
+        
+      </div>
+    </div></div></section>
+  </div>
+</div>
+<div class="stack" style="margin-top:30px">
+  <section><h2>Launch Pad and staffing<span class="count">today and the week ahead</span></h2><div class="scroll"><table>
+<thead><tr><th>When</th><th>Event</th><th>Event time</th><th>Bump in / out</th><th>Expected</th><th>Set-up</th><th>Staffing</th></tr></thead>
+<tbody><tr>
+    <td class="when">Today</td>
+    <td class="ev">SuperIT: Claude Workshop</td>
+    <td class="num">12:00pm – 2:00pm</td>
+    <td class="num">11:00am – 3:00pm</td>
+    <td class="num">60</td>
+    <td>Workshop</td>
+    <td><span class="staff self">Jad supervising — support only</span></td>
+  </tr><tr>
+    <td class="when">Today</td>
+    <td class="ev">Content Creation Circle</td>
+    <td class="num">3:30pm – 4:30pm</td>
+    <td class="num">3:30pm – 4:30pm</td>
+    <td class="num">—</td>
+    <td>Community session</td>
+    <td><span class="staff none">No casual rostered</span></td>
+  </tr><tr>
+    <td class="when">Today</td>
+    <td class="ev">Chalk Chills</td>
+    <td class="num">3:30pm – 7:30pm</td>
+    <td class="num">3:30pm – 7:30pm</td>
+    <td class="num">—</td>
+    <td>Networking</td>
+    <td><span class="staff ok">1 casual rostered</span></td>
+  </tr><tr>
+    <td class="when">Tue 1 Sep</td>
+    <td class="ev">Founders Unfiltered: In conversation with Matthew Stead</td>
+    <td class="num">12:30pm – 2:30pm</td>
+    <td class="num">11:30am – 3:30pm</td>
+    <td class="num">50</td>
+    <td>Fishbowl (custom theatre / cocktail)</td>
+    <td><span class="staff ok">1 supervisor required · 1 rostered</span></td>
+  </tr><tr>
+    <td class="when">Tue 1 Sep</td>
+    <td class="ev">EEE Society, Adelaide University — Industry Panel</td>
+    <td class="num">6:00pm – 8:00pm</td>
+    <td class="num">5:00pm – 9:00pm</td>
+    <td class="num">80</td>
+    <td>Theatre / cocktail</td>
+    <td><span class="staff ok">1 supervisor required · 1 rostered</span></td>
+  </tr><tr>
+    <td class="when">Wed 2 Sep</td>
+    <td class="ev">Snowflake: Technical User Group</td>
+    <td class="num">4:30pm – 7:30pm</td>
+    <td class="num">3:30pm – 8:30pm</td>
+    <td class="num">60</td>
+    <td>Theatre / cocktail</td>
+    <td><span class="staff ok">1 supervisor required · 1 rostered</span></td>
+  </tr></tbody></table></div></section>
+  <section><h2>This week<span class="count">20 tasks</span></h2><div class="week"><div class="wk">
+    <span class="pri High" title="High priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700657479836" target="_blank" rel="noopener">Update AV recording equipment — document requirements from the Hubble incident</a>
+    <span class="due">Overdue 21 Aug</span>
+  </div><div class="wk">
+    <span class="pri High" title="High priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217806134656403" target="_blank" rel="noopener">Reply to Marcos (Hubble) — Oct 14 demo request</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217757373921227" target="_blank" rel="noopener">Chase MLAI overdue invoice — INV MLA-250626, $412.50</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217661394873387" target="_blank" rel="noopener">Send event quote to Neil Rennison (SAFC) — 2-day game dev event</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217615650053349" target="_blank" rel="noopener">Send November dates to Sandra Klein (SA Water) via Jude</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506890802399" target="_blank" rel="noopener">Chase AI Solopreneur mid-point survey responses — Sydney and Melbourne</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700636992226" target="_blank" rel="noopener">Consult Lucinda on Dan Rosen feedback, share cohort feedback summary</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217520213892297" target="_blank" rel="noopener">Schedule ACAW retro with Ben and Jude</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217885739041494" target="_blank" rel="noopener">Book weekly 15-min catch-up with Ben Colley — events risk mitigation</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506656698757" target="_blank" rel="noopener">Follow up with Ali (Firefly) — pricing and logistics progress</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217806134665373" target="_blank" rel="noopener">Reconnect Gmail inbox to HubSpot</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217818023039141" target="_blank" rel="noopener">Reply to Michelle Sugars — member booking the Launch Pad</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700636674203" target="_blank" rel="noopener">Update Space Life Sciences workshop contacts — Soul Kim and Lauren Springer</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217263369324949" target="_blank" rel="noopener">Triage HubSpot deal — SAFA: CBA/SAFA Global Markets Conference, 22 Oct</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217885568593070" target="_blank" rel="noopener">Triage HubSpot deal — Teamgage: Leaders Labs Workshop, 20 Oct</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925585149825" target="_blank" rel="noopener">Triage HubSpot deal — Rohde &amp; Schwarz Australia, 17 Nov</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Medium" title="Medium priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217263369426319" target="_blank" rel="noopener">Triage HubSpot deal — ScrumCraft: Adelaide Agile Community &amp; ICF, 15 Sept</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Low" title="Low priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217615120548915" target="_blank" rel="noopener">Create AI Solopreneur content posts for social channels</a>
+    <span class="due">Overdue 20 Aug</span>
+  </div><div class="wk">
+    <span class="pri Low" title="Low priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217661394631820" target="_blank" rel="noopener">Confirm Alex (Notion) technical session — new day and time</a>
+    <span class="due"></span>
+  </div><div class="wk">
+    <span class="pri Low" title="Low priority"></span>
+    <a href="https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700850673565" target="_blank" rel="noopener">Neil Rennison event — block tentative dates, consult Alex on game dev startups</a>
+    <span class="due"></span>
+  </div></div></section>
+  <section><h2>Flagged for end of day<span class="count">low-stakes overdue admin, not competing for a slot</span></h2><div class="flagged"><span class="fl">Curated invitations to ecosystem events<span class="d">30 Jul</span></span><span class="fl">Q1 Adelaide hub engagement: events and introductions<span class="d">1 Jul</span></span><span class="fl">Update the status of SA #KR3 — 6 founder-led events<span class="d">27 Apr</span></span><span class="fl">Update and close your goal(s)<span class="d">30 Apr</span></span><span class="fl">Exclusive invites for SASIC team members to S&amp;C events<span class="d">30 Apr</span></span><span class="fl">Follow up with announcement in Sweet Spot<span class="d">15 Apr</span></span></div></section>
+</div>
+<footer>
+  <span>Built from Asana, Google Calendar, Gmail and Slack. A snapshot, not a live feed.</span>
+  <span>Fri 28 Aug, 10:42 am ACST · Australia/Adelaide</span>
+</footer>
+</div>
+
+<script>
+(function(){
+  var el = document.getElementById("freshness");
+  if(!el) return;
+  var iso = el.getAttribute("data-at");
+  var then = new Date(iso), now = new Date();
+  var mins = Math.round((now - then)/60000);
+  if(isNaN(mins)) return;
+  var txt;
+  if(mins < 2) txt = "Updated just now";
+  else if(mins < 60) txt = "Updated " + mins + " min ago";
+  else if(mins < 1440) { var h = Math.round(mins/60); txt = "Updated " + h + (h===1?" hour":" hours") + " ago"; }
+  else { var d = Math.round(mins/1440); txt = "Updated " + d + (d===1?" day":" days") + " ago"; }
+  el.querySelector(".txt").textContent = txt;
+  if(mins > 720) el.classList.add("stale");
+})();
+</script>

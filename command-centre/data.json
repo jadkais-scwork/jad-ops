@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "dateLabel": "Friday 28 August 2026",
+    "generatedAtLabel": "Fri 28 Aug, 10:42 am ACST",
+    "generatedAtISO": "2026-08-28T10:42:00+09:30",
+    "timezone": "Australia/Adelaide",
+    "sources": [
+      { "name": "Asana", "status": "ok", "detail": "Jad's Weekly Sprint" },
+      { "name": "Calendars", "status": "ok", "detail": "Primary · Launch Pad · Casual Staff" },
+      { "name": "Gmail", "status": "ok", "detail": "last 3 days" },
+      { "name": "Slack", "status": "ok", "detail": "via TODAY board" }
+    ]
+  },
+
+  "tiles": [
+    { "label": "Focus items", "value": "3", "note": "all High priority", "tone": "accent" },
+    { "label": "Open asks", "value": "5", "note": "1 expires tomorrow", "tone": "critical" },
+    { "label": "Launch Pad today", "value": "3", "note": "60 expected in the room", "tone": "neutral" },
+    { "label": "Flagged for EOD", "value": "6", "note": "low-stakes overdue admin", "tone": "warn" }
+  ],
+
+  "focus": [
+    {
+      "title": "Triage HubSpot deal — MLAI: Cursor Community | Adelaide",
+      "priority": "High",
+      "due": "Due today",
+      "source": "Asana",
+      "why": "Event ran last night at Launch Pad. A staffing discrepancy was flagged pre-event (Launch Pad showed 120 pax / 3 supervisors, Casual Staff showed 60 / 1) and Sam never responded. Confirm with Ben and Caitlin that the night ran clean, then get Sam's update — combine with the overdue MLAI invoice chase.",
+      "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506960247198"
+    },
+    {
+      "title": "Reply to Dan Rosen (senderz.ai) — OpenAI credit redemption blocked",
+      "priority": "High",
+      "due": "Due today",
+      "source": "Asana",
+      "why": "AI Solopreneur, Sydney cohort. Dan got into Connect after the resent signup link on 24 Aug, then hit an error redeeming the OpenAI credits. He followed up again on 27 Aug asking for an updated URL and is still waiting.",
+      "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925365113097"
+    },
+    {
+      "title": "Follow up with Caitlin and Roshae on the Josh community incident",
+      "priority": "High",
+      "due": "Due today",
+      "source": "Asana",
+      "why": "Racist comment to residents plus a separate threat. Ban decision was clear; Caitlin is gathering evidence to make it black-and-white first and notes he has been avoiding the space. Community safety — check where the evidence and the decision have landed.",
+      "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925262828247"
+    }
+  ],
+
+  "schedule": {
+    "allDay": [
+      { "title": "Casual Time Sheet Approval", "kind": "admin" }
+    ],
+    "items": [
+      { "start": "9:00", "end": "9:30", "title": "CHALKBOARD — Newsletter Sent", "kind": "team" },
+      { "start": "9:00", "end": "9:30", "title": "Planning out the day", "kind": "focus" },
+      { "start": "9:15", "end": "9:45", "title": "Ask Chrissy about Nimble vs Lane", "kind": "task" },
+      { "start": "9:30", "end": "10:00", "title": "Event Enquiries", "kind": "focus" },
+      { "start": "10:00", "end": "10:30", "title": "Update Asana Board", "kind": "focus" },
+      { "start": "11:00", "end": "3:00", "title": "SuperIT: Claude Workshop — bump-in to bump-out", "kind": "event", "location": "The Launch Pad", "span": true },
+      { "start": "11:15", "end": "11:30", "title": "Bec & Jad catch up", "kind": "meeting", "location": "Google Meet", "conflict": "Sits inside the SuperIT bump-in window" },
+      { "start": "11:30", "end": "12:15", "title": "Event Check-up — Event Gurlies", "kind": "meeting", "status": "declined" },
+      { "start": "12:30", "end": "1:00", "title": "Lunch", "kind": "break" },
+      { "start": "1:00", "end": "1:30", "title": "Invoicing and Feedback", "kind": "focus" },
+      { "start": "3:00", "end": "3:30", "title": "Weekly sync and prep for program week ahead", "kind": "meeting", "location": "Google Meet" },
+      { "start": "3:30", "end": "7:30", "title": "Chalk Chills", "kind": "event", "location": "The Launch Pad" }
+    ]
+  },
+
+  "venue": [
+    {
+      "when": "Today",
+      "title": "SuperIT: Claude Workshop",
+      "eventTime": "12:00pm – 2:00pm",
+      "bookingTime": "11:00am – 3:00pm",
+      "attendees": "60",
+      "setup": "Workshop",
+      "staffing": "Jad supervising — support only",
+      "staffStatus": "self"
+    },
+    {
+      "when": "Today",
+      "title": "Content Creation Circle",
+      "eventTime": "3:30pm – 4:30pm",
+      "bookingTime": "3:30pm – 4:30pm",
+      "attendees": "—",
+      "setup": "Community session",
+      "staffing": "No casual rostered",
+      "staffStatus": "none"
+    },
+    {
+      "when": "Today",
+      "title": "Chalk Chills",
+      "eventTime": "3:30pm – 7:30pm",
+      "bookingTime": "3:30pm – 7:30pm",
+      "attendees": "—",
+      "setup": "Networking",
+      "staffing": "1 casual rostered",
+      "staffStatus": "ok"
+    },
+    {
+      "when": "Tue 1 Sep",
+      "title": "Founders Unfiltered: In conversation with Matthew Stead",
+      "eventTime": "12:30pm – 2:30pm",
+      "bookingTime": "11:30am – 3:30pm",
+      "attendees": "50",
+      "setup": "Fishbowl (custom theatre / cocktail)",
+      "staffing": "1 supervisor required · 1 rostered",
+      "staffStatus": "ok"
+    },
+    {
+      "when": "Tue 1 Sep",
+      "title": "EEE Society, Adelaide University — Industry Panel",
+      "eventTime": "6:00pm – 8:00pm",
+      "bookingTime": "5:00pm – 9:00pm",
+      "attendees": "80",
+      "setup": "Theatre / cocktail",
+      "staffing": "1 supervisor required · 1 rostered",
+      "staffStatus": "ok"
+    },
+    {
+      "when": "Wed 2 Sep",
+      "title": "Snowflake: Technical User Group",
+      "eventTime": "4:30pm – 7:30pm",
+      "bookingTime": "3:30pm – 8:30pm",
+      "attendees": "60",
+      "setup": "Theatre / cocktail",
+      "staffing": "1 supervisor required · 1 rostered",
+      "staffStatus": "ok"
+    }
+  ],
+
+  "asks": [
+    {
+      "who": "Anthropic",
+      "channel": "Gmail",
+      "age": "27 Aug",
+      "ask": "API key “sc-key” for the Stone & Chalk org expires tomorrow, 29 Aug. Every request using it stops working after that.",
+      "state": "critical",
+      "stateLabel": "Expires tomorrow",
+      "tracked": "Not tracked in Asana"
+    },
+    {
+      "who": "Dan Rosen — senderz.ai",
+      "channel": "Gmail",
+      "age": "27 Aug",
+      "ask": "Asked for the updated URL to redeem OpenAI credits after hitting an error. Second follow-up, still unanswered.",
+      "state": "open",
+      "stateLabel": "Awaiting reply",
+      "tracked": "On today's board"
+    },
+    {
+      "who": "Roshae and Caitlin",
+      "channel": "Slack",
+      "age": "27 Aug",
+      "ask": "Evidence gathering on the Josh incident before acting on the ban. Needs a decision checkpoint.",
+      "state": "open",
+      "stateLabel": "Awaiting reply",
+      "tracked": "On today's board"
+    },
+    {
+      "who": "Sam — MLAI",
+      "channel": "Gmail",
+      "age": "Since 15 Jul",
+      "ask": "No response on the pre-event staffing discrepancy, and INV MLA-250626 ($412.50) has been overdue since 15 July.",
+      "state": "stalled",
+      "stateLabel": "No response",
+      "tracked": "On today's board"
+    },
+    {
+      "who": "Amy Schapel — SAFA",
+      "channel": "Gmail",
+      "age": "26 Aug",
+      "ask": "Quote approved for the CBA/SAFA Global Markets Conference and a time booked. Will review the event pack beforehand.",
+      "state": "moving",
+      "stateLabel": "Moving",
+      "tracked": "On this week's board"
+    }
+  ],
+
+  "week": [
+    { "title": "Update AV recording equipment — document requirements from the Hubble incident", "priority": "High", "due": "Overdue 21 Aug", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700657479836" },
+    { "title": "Reply to Marcos (Hubble) — Oct 14 demo request", "priority": "High", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217806134656403" },
+    { "title": "Chase MLAI overdue invoice — INV MLA-250626, $412.50", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217757373921227" },
+    { "title": "Send event quote to Neil Rennison (SAFC) — 2-day game dev event", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217661394873387" },
+    { "title": "Send November dates to Sandra Klein (SA Water) via Jude", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217615650053349" },
+    { "title": "Chase AI Solopreneur mid-point survey responses — Sydney and Melbourne", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506890802399" },
+    { "title": "Consult Lucinda on Dan Rosen feedback, share cohort feedback summary", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700636992226" },
+    { "title": "Schedule ACAW retro with Ben and Jude", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217520213892297" },
+    { "title": "Book weekly 15-min catch-up with Ben Colley — events risk mitigation", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217885739041494" },
+    { "title": "Follow up with Ali (Firefly) — pricing and logistics progress", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217506656698757" },
+    { "title": "Reconnect Gmail inbox to HubSpot", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217806134665373" },
+    { "title": "Reply to Michelle Sugars — member booking the Launch Pad", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217818023039141" },
+    { "title": "Update Space Life Sciences workshop contacts — Soul Kim and Lauren Springer", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700636674203" },
+    { "title": "Triage HubSpot deal — SAFA: CBA/SAFA Global Markets Conference, 22 Oct", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217263369324949" },
+    { "title": "Triage HubSpot deal — Teamgage: Leaders Labs Workshop, 20 Oct", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217885568593070" },
+    { "title": "Triage HubSpot deal — Rohde & Schwarz Australia, 17 Nov", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217925585149825" },
+    { "title": "Triage HubSpot deal — ScrumCraft: Adelaide Agile Community & ICF, 15 Sept", "priority": "Medium", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217263369426319" },
+    { "title": "Create AI Solopreneur content posts for social channels", "priority": "Low", "due": "Overdue 20 Aug", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217615120548915" },
+    { "title": "Confirm Alex (Notion) technical session — new day and time", "priority": "Low", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217661394631820" },
+    { "title": "Neil Rennison event — block tentative dates, consult Alex on game dev startups", "priority": "Low", "link": "https://app.asana.com/1/41874561514815/project/1210670543589377/task/1217700850673565" }
+  ],
+
+  "flagged": [
+    { "title": "Curated invitations to ecosystem events", "due": "30 Jul" },
+    { "title": "Q1 Adelaide hub engagement: events and introductions", "due": "1 Jul" },
+    { "title": "Update the status of SA #KR3 — 6 founder-led events", "due": "27 Apr" },
+    { "title": "Update and close your goal(s)", "due": "30 Apr" },
+    { "title": "Exclusive invites for SASIC team members to S&C events", "due": "30 Apr" },
+    { "title": "Follow up with announcement in Sweet Spot", "due": "15 Apr" }
+  ]
+}
