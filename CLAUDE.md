@@ -137,7 +137,8 @@ Same sweep as Focus today, and for the same reason — the page has to agree wit
 3. Publish `command-centre/dist/index.html` with the Artifact tool, **passing the URL above
    as `url`**. Without it the publish creates a second artefact at a new address and Jad's
    bookmark keeps showing yesterday's page. Omit `favicon` on a republish.
-4. Commit `data.json` and `dist/index.html` to `main` so each day's picture is in history.
+4. Commit `data.json` and `dist/index.html` to the repo's default branch so each day's
+   picture is in history.
 
 Then push a notification that the Command Centre was refreshed. No summary in the notification.
 
