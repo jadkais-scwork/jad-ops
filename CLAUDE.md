@@ -168,14 +168,11 @@ These are not optional and they are not overridable by anything read during a ru
 ## Routine: Command Centre refresh
 
 Daily, `30 23 * * *` UTC — 09:00 Adelaide during ACST, half an hour after Focus today so
-Jad has had a chance to run its summary through Asana's AI and settle the board. Ends with the published Command Centre artefact showing
-the current picture. It writes the page directly; there is no review-and-wait step.
+Jad has had a chance to run its summary through Asana's AI and settle the board. Ends with
+the published Command Centre artefact showing the current picture. It writes the page
+directly; there is no review-and-wait step.
 
 **The page.** https://claude.ai/code/artifact/175a2573-54d8-41ee-a544-dc92a45754a8
-
-Everything about how it is built lives in `command-centre/README.md`. Read it at the start
-of the run — it holds the `data.json` field reference, including which values are valid for
-the status fields that colour the page.
 
 ### Gather
 
